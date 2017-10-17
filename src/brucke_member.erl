@@ -101,6 +101,8 @@ handle_info({post_init, #route{options = Options} = Route}, State) ->
   {DownstreamClientId, DownstreamTopic} = Route#route.downstream,
   GroupConfig = [{offset_commit_policy, commit_to_kafka_v2}
                 ,{offset_commit_interval_seconds, 10}
+                ,{max_rejoin_attempts, 8640}
+                ,{rejoin_delay_seconds, 10}
                 ],
   ConsumerConfig = brucke_lib:get_consumer_config(Options),
   ProducerConfig = maps:get(producer_config, Options, []),
